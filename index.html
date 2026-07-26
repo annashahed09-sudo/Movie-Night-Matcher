@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>F1 Grand Prix Analytics and Win Predictor</title>
+    <title>F1 Live Probability Simulator</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,9 +11,10 @@
     <div class="analytics-hub">
         <header>
             <h1>Race Probability Simulator</h1>
-            <p>Predictive Modeling Core Engine — 2026 Regulations Data Validation</p>
+            <p>Predictive Modeling Core Engine — Live Telemetry Integration</p>
         </header>
 
+        <!-- Track Selection Grid -->
         <div class="track-grid">
             <div class="track-card active" onclick="switchTrack('hungaroring', this)">
                 <h3>Hungaroring</h3>
@@ -33,11 +34,12 @@
             </div>
         </div>
 
+        <!-- Real-Time Environmental Sliders -->
         <div class="telemetry-sliders">
             <div class="slider-group">
                 <div class="slider-header">
                     <span>Track Moisture Conditions</span>
-                    <span id="moisture-val">Bone Dry</span>
+                    <span id="moisture-val">Connecting to Feed...</span>
                 </div>
                 <input type="range" id="moisture-slider" min="0" max="100" value="0" oninput="calculateProbabilities()">
             </div>
@@ -50,11 +52,13 @@
             </div>
         </div>
 
+        <!-- Animated Top 3 Podium Showcase -->
         <div class="podium-showcase" id="podium-area"></div>
+
+        <!-- Full Interactive Results List -->
         <div class="telemetry-list" id="telemetry-output"></div>
     </div>
 
-    <script src="data.js"></script>
-    <script src="app.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
