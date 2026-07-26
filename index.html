@@ -3,22 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Night Matcher 💖</title>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+  <title>Movie Night Matcher - Win95 Edition 📼</title>
   
   <style>
+    /* From Uiverse.io by reglobby */ 
     :root {
-      --bg-dark: #0a0e17;
-      --card-bg: rgba(21, 30, 48, 0.88);
-      --border-color: rgba(255, 255, 255, 0.12);
-      --accent-pink: #ff5e97;
-      --accent-purple: #9d50bb;
-      --accent-green: #10b981;
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      --card-bg: #c0c0c0;
+      --card-border-light: #ffffff;
+      --card-border-dark: #808080;
+      --card-border-darker: #404040;
+      --card-titlebar: linear-gradient(90deg, #000080, #1084d0);
+      --card-title-text: #ffffff;
+      --card-text: #000000;
+      --card-display-bg: #000000;
+      --card-display-text: #00ff00;
     }
 
     * {
@@ -28,282 +26,312 @@
     }
 
     body {
-      font-family: 'Nunito', sans-serif;
-      background-color: var(--bg-dark);
-      background-image: radial-gradient(circle at center, rgba(157, 80, 187, 0.15) 0%, transparent 70%);
-      color: var(--text-main);
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #008080; /* Win95 Teal Desktop */
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow-x: hidden;
+      padding: 1rem;
     }
 
     .hidden {
       display: none !important;
     }
 
-    /* VIEW 1: LOBBY STYLING */
-    .landing-wrapper {
-      width: 100vw;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      padding: 1rem;
-    }
-
-    .app-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(20px);
-      border: 1px solid var(--border-color);
-      border-radius: 24px;
-      padding: 2.5rem 2rem;
+    /* WINDOW CONTAINER */
+    .win95-card {
+      font-size: 1rem;
       width: 100%;
       max-width: 380px;
-      text-align: center;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-      position: relative;
+      background: var(--card-bg);
+      border: 0.0625em solid;
+      border-color: var(--card-border-light) var(--card-border-darker)
+        var(--card-border-darker) var(--card-border-light);
+      box-shadow:
+        inset 0.0625em 0.0625em 0 var(--card-border-light),
+        inset -0.0625em -0.0625em 0 var(--card-border-dark);
     }
 
-    .brand-title {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 2.5rem;
-      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
+    .card-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.25em 0.25em 0.25em 0.5em;
+      background: var(--card-titlebar);
+      color: var(--card-title-text);
     }
 
-    .subtitle {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      line-height: 1.4;
-    }
-
-    .btn-primary {
-      width: 100%;
-      padding: 1rem;
-      border: none;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
-      color: white;
-      font-weight: 800;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-      box-shadow: 0 10px 20px -5px rgba(255, 94, 151, 0.4);
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      opacity: 0.95;
-    }
-
-    .divider {
-      margin: 1.5rem 0;
-      font-size: 0.75rem;
-      color: var(--text-muted);
+    .card-title-text {
+      font-size: 0.8125em;
       font-weight: 700;
-      letter-spacing: 1px;
+      letter-spacing: 0.01em;
     }
 
-    .input-field {
-      width: 100%;
-      padding: 0.9rem;
-      border-radius: 14px;
-      border: 1px solid var(--border-color);
-      background: rgba(0, 0, 0, 0.3);
-      color: white;
-      text-align: center;
-      font-size: 0.95rem;
-      margin-bottom: 1rem;
+    .card-controls {
+      display: flex;
+      gap: 0.125em;
+    }
+
+    .card-btn {
+      width: 1.2em;
+      height: 1.1em;
+      background: var(--card-bg);
+      border: 0.0625em solid;
+      border-color: var(--card-border-light) var(--card-border-darker)
+        var(--card-border-darker) var(--card-border-light);
+      cursor: pointer;
+      position: relative;
+      padding: 0;
       outline: none;
     }
 
-    .input-field:focus {
-      border-color: var(--accent-pink);
+    .card-btn:active {
+      border-color: var(--card-border-darker) var(--card-border-light)
+        var(--card-border-light) var(--card-border-darker);
     }
 
-    .btn-grid {
+    .card-btn-close::before,
+    .card-btn-close::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0.5em;
+      height: 0.0625em;
+      background: var(--card-text);
+    }
+
+    .card-btn-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+    .card-btn-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+
+    .card-menubar {
       display: flex;
-      gap: 0.75rem;
+      gap: 0.125em;
+      padding: 0.25em 0.375em;
+      border-bottom: 0.0625em solid var(--card-border-dark);
     }
 
-    .btn-secondary {
-      flex: 1;
-      padding: 0.85rem;
-      border-radius: 14px;
-      border: 1px solid var(--border-color);
-      background: rgba(255, 255, 255, 0.05);
-      color: white;
-      font-weight: 700;
+    .menu-item {
+      font-size: 0.75em;
+      padding: 0.125em 0.5em;
+      color: var(--card-text);
       cursor: pointer;
-      transition: background 0.2s ease;
     }
 
-    .btn-secondary:hover {
-      background: rgba(255, 255, 255, 0.1);
+    .menu-item:hover {
+      background: #000080;
+      color: #ffffff;
     }
 
-    /* VIEW 2: SWIPER DECK */
-    .deck-container {
-      width: 100%;
-      max-width: 360px;
+    .card-body {
+      padding: 0.75em;
+    }
+
+    /* DIGITAL DISPLAY */
+    .player-display {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
       align-items: center;
-      padding: 1rem;
+      padding: 0.5em;
+      margin-bottom: 0.5em;
+      background: var(--card-display-bg);
+      border: 0.0625em solid;
+      border-color: var(--card-border-dark) var(--card-border-light)
+        var(--card-border-light) var(--card-border-dark);
+      box-shadow: inset 0.0625em 0.0625em 0 var(--card-border-darker);
     }
 
-    .movie-card {
+    .track-name {
+      font-size: 0.75em;
+      font-family: monospace;
+      color: var(--card-display-text);
+    }
+
+    .track-time {
+      font-size: 0.625em;
+      font-family: monospace;
+      color: var(--card-display-text);
+    }
+
+    /* WIN95 INPUTS & BUTTONS */
+    .win95-input {
+      width: 100%;
+      padding: 0.4em;
+      font-family: monospace;
+      font-size: 0.8em;
+      background: #ffffff;
+      border: 0.0625em solid;
+      border-color: var(--card-border-dark) var(--card-border-light)
+        var(--card-border-light) var(--card-border-dark);
+      box-shadow: inset 0.0625em 0.0625em 0 var(--card-border-darker);
+      margin: 0.5em 0;
+      outline: none;
+    }
+
+    .win95-btn {
+      padding: 0.4em 0.8em;
+      font-size: 0.8em;
+      font-weight: bold;
       background: var(--card-bg);
-      border-radius: 24px;
-      border: 1px solid var(--border-color);
-      overflow: hidden;
-      width: 100%;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      border: 0.125em solid;
+      border-color: var(--card-border-light) var(--card-border-darker)
+        var(--card-border-darker) var(--card-border-light);
+      cursor: pointer;
+      outline: none;
     }
 
-    .poster-box img {
+    .win95-btn:active {
+      border-color: var(--card-border-darker) var(--card-border-light)
+        var(--card-border-light) var(--card-border-darker);
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 0.5em;
+      margin-top: 0.5em;
+    }
+
+    .btn-row .win95-btn {
+      flex: 1;
+    }
+
+    /* POSTER BOX */
+    .poster-container {
+      background: #000;
+      border: 0.0625em solid;
+      border-color: var(--card-border-dark) var(--card-border-light)
+        var(--card-border-light) var(--card-border-dark);
+      margin-bottom: 0.5em;
+      text-align: center;
+    }
+
+    .poster-container img {
       width: 100%;
-      height: 380px;
+      max-height: 280px;
       object-fit: cover;
       display: block;
-      background: #111827;
     }
 
-    .movie-details {
-      padding: 1.25rem;
-      text-align: left;
-    }
-
-    .movie-details h2 {
-      font-family: 'Fredoka', sans-serif;
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .movie-details p {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.4;
+    .movie-desc {
+      font-size: 0.75em;
+      color: #000;
+      padding: 0.5em;
+      background: #fff;
+      border: 0.0625em solid var(--card-border-dark);
       max-height: 60px;
-      overflow: hidden;
+      overflow-y: auto;
+      margin-bottom: 0.5em;
     }
 
-    .action-bar {
+    /* STATUS BAR */
+    .card-statusbar {
       display: flex;
-      border-top: 1px solid var(--border-color);
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.25em 0.375em;
+      background: var(--card-bg);
+      border-top: 0.0625em solid var(--card-border-light);
+      box-shadow: inset 0 0.0625em 0 var(--card-border-dark);
     }
 
-    .action-bar button {
+    .status-text {
+      font-size: 0.6875em;
+      color: var(--card-text);
+      padding: 0.125em 0.25em;
+      border: 0.0625em solid;
+      border-color: var(--card-border-dark) var(--card-border-light)
+        var(--card-border-light) var(--card-border-dark);
       flex: 1;
-      padding: 1.1rem;
-      border: none;
-      font-size: 1rem;
-      font-weight: 800;
-      cursor: pointer;
     }
 
-    .btn-skip {
-      background: rgba(255, 255, 255, 0.03);
-      color: #ef4444;
-    }
-
-    .btn-like {
-      background: var(--accent-green);
-      color: white;
-    }
-
-    /* VIEW 3: RECEIPT OVERLAY */
-    .receipt-container {
-      width: 340px;
-      height: 500px;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      position: relative;
-      margin: 0 auto;
-    }
-
-    .receipt-text-overlay {
-      position: absolute;
-      top: 145px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 155px;
+    /* RECEIPT PRINT WINDOW */
+    .receipt-box {
+      background: #ffffff;
+      color: #000000;
+      border: 0.0625em solid var(--card-border-dark);
+      padding: 1em;
       font-family: monospace;
       text-align: center;
-      color: #111827;
-    }
-
-    .receipt-stamp {
-      border: 3px dashed #ef4444;
-      color: #ef4444;
-      font-weight: 900;
-      font-size: 1.1rem;
-      display: inline-block;
-      padding: 0.2rem 0.5rem;
-      border-radius: 6px;
-      transform: rotate(-12deg);
-      margin-top: 0.75rem;
+      margin-bottom: 0.5em;
     }
   </style>
 </head>
 <body>
 
-  <div id="view-lobby" class="landing-wrapper" style="background-image: url('./public/background.png');">
-    <div class="app-card">
-      <h1 class="brand-title">movie night</h1>
-      <p class="subtitle">Sync up, swipe together, and match your movie picks instantly.</p>
-
-      <button id="btn-start-solo" class="btn-primary">🍿 Start Solo Mode</button>
-
-      <div class="divider">OR SYNC ROOM</div>
-
-      <input type="text" id="room-code" placeholder="Enter Room Code..." class="input-field" />
-
-      <div class="btn-grid">
-        <button id="btn-create-room" class="btn-secondary">Create</button>
-        <button id="btn-join-room" class="btn-secondary">Join</button>
+  <div class="win95-card">
+    <div class="card-titlebar">
+      <div class="card-title-text">MovieNight.exe - Media Player</div>
+      <div class="card-controls">
+        <button class="card-btn card-btn-close"></button>
       </div>
     </div>
-  </div>
 
-  <div id="view-swiper" class="deck-container hidden">
-    <div class="movie-card">
-      <div class="poster-box">
-        <img id="movie-poster" src="" alt="Poster" />
-      </div>
-      <div class="movie-details">
-        <h2 id="movie-title">Loading Movies...</h2>
-        <p id="movie-overview"></p>
-      </div>
-      <div class="action-bar">
-        <button id="btn-skip" class="btn-skip">❌ Skip</button>
-        <button id="btn-like" class="btn-like">💖 Like</button>
-      </div>
+    <div class="card-menubar">
+      <div class="menu-item">Media</div>
+      <div class="menu-item">Edit</div>
+      <div class="menu-item">View</div>
+      <div class="menu-item">Help</div>
     </div>
-  </div>
 
-  <div id="view-receipt" class="deck-container hidden">
-    <div class="receipt-container" style="background-image: url('./public/result.png');">
-      <div class="receipt-text-overlay">
-        <h3 style="margin: 0; font-size: 0.9rem;">MOVIENIGHT INC</h3>
-        <p style="margin: 0; font-size: 0.6rem;">VALIDATED TICKET</p>
-        <p style="margin: 0.2rem 0;">- - - - - - - - - -</p>
-        <p id="matched-title" style="font-weight: bold; margin: 0.4rem 0; font-size: 0.8rem; word-break: break-word;"></p>
-        <p id="matched-score" style="margin: 0; font-size: 0.7rem;"></p>
-        <p style="margin: 0.2rem 0;">- - - - - - - - - -</p>
-        <div class="receipt-stamp">MATCHED!</div>
+    <div class="card-body">
+
+      <div id="view-lobby">
+        <div class="player-display">
+          <div class="track-name">SYSTEM: READY</div>
+          <div class="track-time">00:00</div>
+        </div>
+
+        <p style="font-size: 0.8em; margin-bottom: 0.5em;">Select room mode to initialize catalog stream:</p>
+
+        <button id="btn-start-solo" class="win95-btn" style="width: 100%;">▶ Start Solo Stream</button>
+
+        <div style="margin: 0.75em 0 0.25em 0; font-size: 0.75em; font-weight: bold;">SYNC ROOM ID:</div>
+        <input type="text" id="room-code" placeholder="ROOM_CODE..." class="win95-input" />
+
+        <div class="btn-row">
+          <button id="btn-create-room" class="win95-btn">Create Room</button>
+          <button id="btn-join-room" class="win95-btn">Join Room</button>
+        </div>
       </div>
+
+      <div id="view-swiper" class="hidden">
+        <div class="player-display">
+          <div class="track-name" id="display-track-title">BUFFERING...</div>
+          <div class="track-time" id="deck-counter">0/20</div>
+        </div>
+
+        <div class="poster-container">
+          <img id="movie-poster" src="" alt="Movie Poster" />
+        </div>
+
+        <div class="movie-desc" id="movie-overview">Loading metadata...</div>
+
+        <div class="btn-row">
+          <button id="btn-skip" class="win95-btn" style="color: #800000;">✖ Skip</button>
+          <button id="btn-like" class="win95-btn" style="color: #008000;">✔ Match</button>
+        </div>
+      </div>
+
+      <div id="view-receipt" class="hidden">
+        <div class="receipt-box">
+          <p>------------------------</p>
+          <p><strong>MOVIENIGHT INC.</strong></p>
+          <p>MATCH CONFIRMED</p>
+          <p>------------------------</p>
+          <p id="matched-title" style="margin: 0.5em 0; font-weight: bold;"></p>
+          <p id="matched-score" style="font-size: 0.8em;"></p>
+          <p>------------------------</p>
+          <p>[ TICKET VALIDATED ]</p>
+        </div>
+        <button onclick="window.print()" class="win95-btn" style="width: 100%;">🖨️ Print Ticket</button>
+      </div>
+
     </div>
-    <button onclick="window.print()" class="btn-primary" style="margin-top: 1rem;">🖨️ Print Ticket</button>
+
+    <div class="card-statusbar">
+      <div class="status-text" id="status-bar-text">Status: Online</div>
+    </div>
   </div>
 
   <script>
@@ -314,8 +342,10 @@
     const lobby = document.getElementById('view-lobby');
     const swiper = document.getElementById('view-swiper');
     const receipt = document.getElementById('view-receipt');
+    const statusBarText = document.getElementById('status-bar-text');
 
     async function fetchCatalog() {
+      statusBarText.innerText = "Status: Connecting to TMDB...";
       try {
         const res = await fetch('https://api.themoviedb.org/3/trending/movie/week?page=1', {
           headers: { Authorization: `Bearer ${TMDB_TOKEN}` }
@@ -323,20 +353,23 @@
         const data = await res.json();
         movies = data.results || [];
         renderMovie();
+        statusBarText.innerText = "Status: Playing";
       } catch (err) {
-        console.error("TMDB Fetch Error:", err);
+        console.error("TMDB Error:", err);
+        statusBarText.innerText = "Status: Error loading catalog";
       }
     }
 
     function renderMovie() {
       if (idx >= movies.length) {
-        document.getElementById('movie-title').innerText = "End of deck!";
-        document.getElementById('movie-overview').innerText = "No more titles remaining.";
+        document.getElementById('display-track-title').innerText = "END OF DECK";
+        document.getElementById('movie-overview').innerText = "No further movies available.";
         return;
       }
       const item = movies[idx];
-      document.getElementById('movie-title').innerText = item.title;
-      document.getElementById('movie-overview').innerText = item.overview || '';
+      document.getElementById('display-track-title').innerText = item.title.toUpperCase();
+      document.getElementById('deck-counter').innerText = `${idx + 1}/${movies.length}`;
+      document.getElementById('movie-overview').innerText = item.overview || 'No synopsis available.';
       document.getElementById('movie-poster').src = item.poster_path 
         ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
         : 'https://via.placeholder.com/500x750?text=No+Poster';
@@ -363,6 +396,7 @@
       receipt.classList.remove('hidden');
       document.getElementById('matched-title').innerText = item.title.toUpperCase();
       document.getElementById('matched-score').innerText = `RATING: ⭐ ${item.vote_average ? item.vote_average.toFixed(1) : 'N/A'}/10`;
+      statusBarText.innerText = "Status: Match found!";
     };
   </script>
 </body>
