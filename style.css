@@ -23,6 +23,7 @@ body {
     overflow-x: hidden;
 }
 
+/* Glassmorphism Dashboard Hub */
 .analytics-hub {
     background: var(--card-bg);
     backdrop-filter: blur(16px);
@@ -141,6 +142,7 @@ input[type="range"]::-webkit-slider-thumb {
     box-shadow: 0 0 8px var(--f1-red);
 }
 
+/* 3D Moving Podium Section */
 .podium-showcase {
     display: flex;
     justify-content: center;
@@ -217,6 +219,7 @@ input[type="range"]::-webkit-slider-thumb {
     white-space: nowrap;
 }
 
+/* Scoreboard Rows */
 .telemetry-list {
     display: flex;
     flex-direction: column;
