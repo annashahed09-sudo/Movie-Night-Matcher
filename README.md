@@ -1,18 +1,13 @@
-# 🎬 Movie Night Matcher
+# ⏱️ PomoTimer95
 
-A sleek, interactive web application designed to eliminate movie night indecision! Swipe through popular movies solo or sync screens in real-time with a partner. Once a match is made, the app generates and prints a custom animated cinema receipt ticket.
+A media-player-inspired Pomodoro focus timer wrapped in a classic **Windows 95 interface**. Designed to bring vintage desktop vibes to your focus and productivity sessions—built using clean, single-file vanilla web standards.
 
 ---
 
 ## 🌟 Key Features
 
-*Solo Mode:** Quick matching for single viewers looking for something to watch instantly.
-*Couple / Group Sync Mode:** Host or join dynamic room codes using real-time synchronization.
-*Interactive Swipe Mechanics:** Smooth gesture-based swiping for liking or skipping movie cards.
-*Receipt Voucher Generator:** Dynamic ticket output with animations, complete with a matched stamp and printable receipt format.
-*TMDB Integration:** Loads live trending movie posters, descriptions, and ratings.
+* *Win95 Media Player Aesthetic:** Classic retro title bar, digital green LED display, bevel borders, and media control buttons.
+* *Fully Customizable:** Easily tweak durations for Focus, Short Break, and Long Break sessions.
+* *Live Track Progress Bar:** Watch your session play out like an audio track.
+* *Session Completion Alarm:** Beeps when time runs out and automatically logs completed focus sessions.
 
----
-
-Check out the deployed app on GitHub Pages:  
-👉 **[Movie Night Matcher Live](https://annashahed09-sudo.github.io/Movie-Night-Matcher/)**
