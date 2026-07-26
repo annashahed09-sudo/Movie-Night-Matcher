@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Night Matcher - Win95 Edition 📼</title>
-  
+  <title>Win95 Pomodoro Player ⏱️</title>
+
   <style>
-    /* From Uiverse.io by reglobby */ 
+    /* From Uiverse.io by reglobby - Scaled & Adapted for Pomodoro */ 
     :root {
       --card-bg: #c0c0c0;
       --card-border-light: #ffffff;
@@ -27,50 +27,47 @@
 
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #008080; /* Win95 Teal Desktop */
+      background-color: #008080; /* Win95 Desktop Teal */
       min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 1rem;
+      padding: 1.5rem;
     }
 
-    .hidden {
-      display: none !important;
-    }
-
-    /* WINDOW CONTAINER */
+    /* EXPANDED WIN95 CARD */
     .win95-card {
-      font-size: 1rem;
+      font-size: 1.15rem;
       width: 100%;
-      max-width: 380px;
+      max-width: 520px; /* Made larger on screen */
       background: var(--card-bg);
       border: 0.0625em solid;
       border-color: var(--card-border-light) var(--card-border-darker)
         var(--card-border-darker) var(--card-border-light);
       box-shadow:
         inset 0.0625em 0.0625em 0 var(--card-border-light),
-        inset -0.0625em -0.0625em 0 var(--card-border-dark);
+        inset -0.0625em -0.0625em 0 var(--card-border-dark),
+        6px 6px 20px rgba(0, 0, 0, 0.4);
     }
 
     .card-titlebar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.25em 0.25em 0.25em 0.5em;
+      padding: 0.35em 0.35em 0.35em 0.6em;
       background: var(--card-titlebar);
       color: var(--card-title-text);
     }
 
     .card-title-text {
-      font-size: 0.8125em;
+      font-size: 0.85em;
       font-weight: 700;
       letter-spacing: 0.01em;
     }
 
     .card-controls {
       display: flex;
-      gap: 0.125em;
+      gap: 0.2em;
     }
 
     .card-btn {
@@ -97,8 +94,8 @@
       position: absolute;
       top: 50%;
       left: 50%;
-      width: 0.5em;
-      height: 0.0625em;
+      width: 0.6em;
+      height: 0.0825em;
       background: var(--card-text);
     }
 
@@ -107,34 +104,34 @@
 
     .card-menubar {
       display: flex;
-      gap: 0.125em;
-      padding: 0.25em 0.375em;
+      gap: 0.2em;
+      padding: 0.35em 0.5em;
       border-bottom: 0.0625em solid var(--card-border-dark);
     }
 
     .menu-item {
-      font-size: 0.75em;
-      padding: 0.125em 0.5em;
+      font-size: 0.8em;
+      padding: 0.15em 0.6em;
       color: var(--card-text);
       cursor: pointer;
     }
 
-    .menu-item:hover {
+    .menu-item:hover, .menu-item.active {
       background: #000080;
       color: #ffffff;
     }
 
     .card-body {
-      padding: 0.75em;
+      padding: 1em;
     }
 
-    /* DIGITAL DISPLAY */
+    /* DIGITAL LED DISPLAY */
     .player-display {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0.5em;
-      margin-bottom: 0.5em;
+      padding: 0.8em 1em;
+      margin-bottom: 0.8em;
       background: var(--card-display-bg);
       border: 0.0625em solid;
       border-color: var(--card-border-dark) var(--card-border-light)
@@ -143,261 +140,161 @@
     }
 
     .track-name {
-      font-size: 0.75em;
+      font-size: 0.85em;
       font-family: monospace;
       color: var(--card-display-text);
+      text-transform: uppercase;
     }
 
     .track-time {
-      font-size: 0.625em;
+      font-size: 2.2em;
+      font-weight: bold;
       font-family: monospace;
       color: var(--card-display-text);
+      letter-spacing: 2px;
     }
 
-    /* WIN95 INPUTS & BUTTONS */
-    .win95-input {
-      width: 100%;
-      padding: 0.4em;
-      font-family: monospace;
-      font-size: 0.8em;
-      background: #ffffff;
+    /* PROGRESS BAR */
+    .player-progress {
+      position: relative;
+      height: 1.1em;
+      margin-bottom: 1em;
+      background: var(--card-bg);
       border: 0.0625em solid;
       border-color: var(--card-border-dark) var(--card-border-light)
         var(--card-border-light) var(--card-border-dark);
       box-shadow: inset 0.0625em 0.0625em 0 var(--card-border-darker);
-      margin: 0.5em 0;
-      outline: none;
     }
 
-    .win95-btn {
-      padding: 0.4em 0.8em;
-      font-size: 0.8em;
-      font-weight: bold;
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #000080;
+      transition: width 0.3s ease;
+    }
+
+    .progress-thumb {
+      position: absolute;
+      top: -0.0625em;
+      left: 0%;
+      width: 0.6em;
+      height: 1.2em;
+      background: var(--card-bg);
+      border: 0.0625em solid;
+      border-color: var(--card-border-light) var(--card-border-darker)
+        var(--card-border-darker) var(--card-border-light);
+      transform: translateX(-50%);
+      transition: left 0.3s ease;
+    }
+
+    /* WIN95 CONTROL BUTTONS */
+    .player-controls {
+      display: flex;
+      justify-content: center;
+      gap: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    .ctrl-btn {
+      width: 3em;
+      height: 2.2em;
       background: var(--card-bg);
       border: 0.125em solid;
       border-color: var(--card-border-light) var(--card-border-darker)
         var(--card-border-darker) var(--card-border-light);
       cursor: pointer;
+      position: relative;
       outline: none;
     }
 
-    .win95-btn:active {
+    .ctrl-btn:hover {
+      background: #d4d4d4;
+    }
+
+    .ctrl-btn:active {
       border-color: var(--card-border-darker) var(--card-border-light)
         var(--card-border-light) var(--card-border-darker);
     }
 
-    .btn-row {
-      display: flex;
-      gap: 0.5em;
+    .ctrl-play::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 55%;
+      border: 0.45em solid transparent;
+      border-left: 0.55em solid var(--card-text);
+      transform: translate(-50%, -50%);
+    }
+
+    .ctrl-stop::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0.75em;
+      height: 0.75em;
+      background: var(--card-text);
+      transform: translate(-50%, -50%);
+    }
+
+    .ctrl-reset::before {
+      content: "↺";
+      position: absolute;
+      top: 45%;
+      left: 50%;
+      font-size: 1.2em;
+      font-weight: bold;
+      color: var(--card-text);
+      transform: translate(-50%, -50%);
+    }
+
+    /* CUSTOMIZATION PANEL */
+    .custom-panel {
+      background: #ffffff;
+      border: 0.0625em solid var(--card-border-dark);
+      padding: 0.8em;
       margin-top: 0.5em;
     }
 
-    .btn-row .win95-btn {
-      flex: 1;
+    .custom-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5em;
+      font-size: 0.8em;
     }
 
-    /* POSTER BOX */
-    .poster-container {
-      background: #000;
+    .custom-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .win95-num-input {
+      width: 60px;
+      padding: 0.25em;
+      font-family: monospace;
+      font-size: 0.9em;
+      text-align: center;
       border: 0.0625em solid;
       border-color: var(--card-border-dark) var(--card-border-light)
         var(--card-border-light) var(--card-border-dark);
-      margin-bottom: 0.5em;
-      text-align: center;
+      box-shadow: inset 0.0625em 0.0625em 0 var(--card-border-darker);
+      outline: none;
     }
 
-    .poster-container img {
-      width: 100%;
-      max-height: 280px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .movie-desc {
-      font-size: 0.75em;
-      color: #000;
-      padding: 0.5em;
-      background: #fff;
-      border: 0.0625em solid var(--card-border-dark);
-      max-height: 60px;
-      overflow-y: auto;
-      margin-bottom: 0.5em;
-    }
-
-    /* STATUS BAR */
+    /* STATUSBAR */
     .card-statusbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.25em 0.375em;
+      padding: 0.35em 0.5em;
       background: var(--card-bg);
       border-top: 0.0625em solid var(--card-border-light);
       box-shadow: inset 0 0.0625em 0 var(--card-border-dark);
     }
 
     .status-text {
-      font-size: 0.6875em;
+      font-size: 0.75em;
       color: var(--card-text);
-      padding: 0.125em 0.25em;
+      padding: 0.15em 0.35em;
       border: 0.0625em solid;
-      border-color: var(--card-border-dark) var(--card-border-light)
-        var(--card-border-light) var(--card-border-dark);
-      flex: 1;
-    }
-
-    /* RECEIPT PRINT WINDOW */
-    .receipt-box {
-      background: #ffffff;
-      color: #000000;
-      border: 0.0625em solid var(--card-border-dark);
-      padding: 1em;
-      font-family: monospace;
-      text-align: center;
-      margin-bottom: 0.5em;
-    }
-  </style>
-</head>
-<body>
-
-  <div class="win95-card">
-    <div class="card-titlebar">
-      <div class="card-title-text">MovieNight.exe - Media Player</div>
-      <div class="card-controls">
-        <button class="card-btn card-btn-close"></button>
-      </div>
-    </div>
-
-    <div class="card-menubar">
-      <div class="menu-item">Media</div>
-      <div class="menu-item">Edit</div>
-      <div class="menu-item">View</div>
-      <div class="menu-item">Help</div>
-    </div>
-
-    <div class="card-body">
-
-      <div id="view-lobby">
-        <div class="player-display">
-          <div class="track-name">SYSTEM: READY</div>
-          <div class="track-time">00:00</div>
-        </div>
-
-        <p style="font-size: 0.8em; margin-bottom: 0.5em;">Select room mode to initialize catalog stream:</p>
-
-        <button id="btn-start-solo" class="win95-btn" style="width: 100%;">▶ Start Solo Stream</button>
-
-        <div style="margin: 0.75em 0 0.25em 0; font-size: 0.75em; font-weight: bold;">SYNC ROOM ID:</div>
-        <input type="text" id="room-code" placeholder="ROOM_CODE..." class="win95-input" />
-
-        <div class="btn-row">
-          <button id="btn-create-room" class="win95-btn">Create Room</button>
-          <button id="btn-join-room" class="win95-btn">Join Room</button>
-        </div>
-      </div>
-
-      <div id="view-swiper" class="hidden">
-        <div class="player-display">
-          <div class="track-name" id="display-track-title">BUFFERING...</div>
-          <div class="track-time" id="deck-counter">0/20</div>
-        </div>
-
-        <div class="poster-container">
-          <img id="movie-poster" src="" alt="Movie Poster" />
-        </div>
-
-        <div class="movie-desc" id="movie-overview">Loading metadata...</div>
-
-        <div class="btn-row">
-          <button id="btn-skip" class="win95-btn" style="color: #800000;">✖ Skip</button>
-          <button id="btn-like" class="win95-btn" style="color: #008000;">✔ Match</button>
-        </div>
-      </div>
-
-      <div id="view-receipt" class="hidden">
-        <div class="receipt-box">
-          <p>------------------------</p>
-          <p><strong>MOVIENIGHT INC.</strong></p>
-          <p>MATCH CONFIRMED</p>
-          <p>------------------------</p>
-          <p id="matched-title" style="margin: 0.5em 0; font-weight: bold;"></p>
-          <p id="matched-score" style="font-size: 0.8em;"></p>
-          <p>------------------------</p>
-          <p>[ TICKET VALIDATED ]</p>
-        </div>
-        <button onclick="window.print()" class="win95-btn" style="width: 100%;">🖨️ Print Ticket</button>
-      </div>
-
-    </div>
-
-    <div class="card-statusbar">
-      <div class="status-text" id="status-bar-text">Status: Online</div>
-    </div>
-  </div>
-
-  <script>
-    const TMDB_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWVjMjlmODZlYWUwNDQ1MjllY2Y2NzA5YzlhNjhhMCIsIm5iZiI6MTg1MDkwMTY5LjcxMSwic3ViIjoiNmE2NjUwNzlkODk1M2U4NDdjM2Y4OGViIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.l9UN7l5oXlUZ-WuT87nlBgSDyqp6Ok0OpstKak0303g";
-    let movies = [];
-    let idx = 0;
-
-    const lobby = document.getElementById('view-lobby');
-    const swiper = document.getElementById('view-swiper');
-    const receipt = document.getElementById('view-receipt');
-    const statusBarText = document.getElementById('status-bar-text');
-
-    async function fetchCatalog() {
-      statusBarText.innerText = "Status: Connecting to TMDB...";
-      try {
-        const res = await fetch('https://api.themoviedb.org/3/trending/movie/week?page=1', {
-          headers: { Authorization: `Bearer ${TMDB_TOKEN}` }
-        });
-        const data = await res.json();
-        movies = data.results || [];
-        renderMovie();
-        statusBarText.innerText = "Status: Playing";
-      } catch (err) {
-        console.error("TMDB Error:", err);
-        statusBarText.innerText = "Status: Error loading catalog";
-      }
-    }
-
-    function renderMovie() {
-      if (idx >= movies.length) {
-        document.getElementById('display-track-title').innerText = "END OF DECK";
-        document.getElementById('movie-overview').innerText = "No further movies available.";
-        return;
-      }
-      const item = movies[idx];
-      document.getElementById('display-track-title').innerText = item.title.toUpperCase();
-      document.getElementById('deck-counter').innerText = `${idx + 1}/${movies.length}`;
-      document.getElementById('movie-overview').innerText = item.overview || 'No synopsis available.';
-      document.getElementById('movie-poster').src = item.poster_path 
-        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
-        : 'https://via.placeholder.com/500x750?text=No+Poster';
-    }
-
-    function launchSwiper() {
-      lobby.classList.add('hidden');
-      swiper.classList.remove('hidden');
-      fetchCatalog();
-    }
-
-    document.getElementById('btn-start-solo').onclick = launchSwiper;
-    document.getElementById('btn-create-room').onclick = launchSwiper;
-    document.getElementById('btn-join-room').onclick = launchSwiper;
-
-    document.getElementById('btn-skip').onclick = () => {
-      idx++;
-      renderMovie();
-    };
-
-    document.getElementById('btn-like').onclick = () => {
-      const item = movies[idx];
-      swiper.classList.add('hidden');
-      receipt.classList.remove('hidden');
-      document.getElementById('matched-title').innerText = item.title.toUpperCase();
-      document.getElementById('matched-score').innerText = `RATING: ⭐ ${item.vote_average ? item.vote_average.toFixed(1) : 'N/A'}/10`;
-      statusBarText.innerText = "Status: Match found!";
-    };
-  </script>
-</body>
-</html>
+      border-color: var
