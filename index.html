@@ -7,48 +7,363 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
   
   <style>
-    * { box-sizing: border-box; }
-    body { margin: 0; padding: 0; font-family: 'Nunito', sans-serif; background-color: #0d1117; color: #ffffff; min-height: 100vh; display: flex; justify-content: center; align-items: center; }
-    .hidden { display: none !important; }
-    
-    .landing-stage-wrapper { display: flex; justify-content: center; align-items: center; width: 100vw; min-height: 100vh; padding: 1rem; }
-    .landing-form-glass { background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(16px); padding: 2.5rem 2rem; border-radius: 2rem; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.6); border: 1px solid rgba(255, 255, 255, 0.15); }
-    .main-logo-text { font-family: 'Fredoka', sans-serif; font-size: 2.8rem; background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0 0 0.25rem 0; }
-    .sub-tagline { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 1.75rem; font-weight: 600; }
-    .btn-solo-launcher { background: linear-gradient(135deg, #a855f7 0%, #ec4899 100%); color: white; width: 100%; padding: 0.95rem; border-radius: 1.25rem; font-weight: 800; font-size: 1rem; border: none; cursor: pointer; box-shadow: 0 8px 20px rgba(236, 72, 153, 0.35); }
-    .separator-line { margin: 1.25rem 0; color: #94a3b8; font-size: 0.75rem; font-weight: 800; }
-    .room-input-box { width: 100%; padding: 0.9rem; border-radius: 1rem; border: 2px solid rgba(255, 255, 255, 0.1); background: rgba(15, 23, 42, 0.6); color: white; font-size: 0.95rem; font-weight: 700; text-align: center; margin-bottom: 1rem; }
-    .dual-action-row { display: flex; gap: 0.75rem; }
-    .btn-create, .btn-join { flex: 1; padding: 0.85rem; font-weight: 800; border-radius: 1rem; border: none; cursor: pointer; }
-    .btn-create { background: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%); color: white; }
-    .btn-join { background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid rgba(255, 255, 255, 0.15); }
-    
-    .app-workspace-standard-bg { display: flex; flex-direction: column; align-items: center; width: 100vw; min-height: 100vh; background-color: #0f172a; padding: 1.25rem; }
-    .animated-swipe-card { background: #1e293b; border-radius: 1.75rem; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6); width: 100%; max-width: 360px; border: 1px solid rgba(255,255,255,0.1); margin-top: 2rem; }
-    .card-poster-frame img { width: 100%; height: 360px; object-fit: cover; background: #0f172a; }
-    .card-body-metadata { padding: 1.25rem; }
-    .card-body-metadata h2 { font-family: 'Fredoka', sans-serif; margin: 0 0 0.35rem 0; }
-    .card-button-footer-row { display: flex; border-top: 1px solid rgba(255,255,255,0.08); }
-    .card-button-footer-row button { flex: 1; padding: 1.1rem; font-size: 1.05rem; font-weight: 800; border: none; cursor: pointer; }
-    .btn-footer-skip { background: #334155; color: #f87171; }
-    .btn-footer-like { background: linear-gradient(135deg, #10b981 0%, #059669 100%); color: white; }
-    
-    .printer-assembly-deck { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 380px; margin-top: 2rem; }
-    .hardware-print-casing { width: 340px; min-height: 400px; background: #ffffff; border-radius: 1rem; padding: 1.5rem; position: relative; color: #111827; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-    .receipt-text-overlay { font-family: monospace; text-align: center; }
-    .receipt-ink-stamp { border: 3px dashed #ef4444; color: #ef4444; font-weight: 900; font-size: 1.1rem; padding: 0.2rem 0.5rem; border-radius: 0.4rem; transform: rotate(-12deg); margin-top: 1rem; display: inline-block; }
+    :root {
+      --bg-dark: #0a0e17;
+      --card-bg: rgba(21, 30, 48, 0.88);
+      --border-color: rgba(255, 255, 255, 0.12);
+      --accent-pink: #ff5e97;
+      --accent-purple: #9d50bb;
+      --accent-green: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at center, rgba(157, 80, 187, 0.15) 0%, transparent 70%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* VIEW 1: LOBBY STYLING */
+    .landing-wrapper {
+      width: 100vw;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      padding: 1rem;
+    }
+
+    .app-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-color);
+      border-radius: 24px;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+      position: relative;
+    }
+
+    .brand-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      line-height: 1.4;
+    }
+
+    .btn-primary {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+      color: white;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 10px 20px -5px rgba(255, 94, 151, 0.4);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      opacity: 0.95;
+    }
+
+    .divider {
+      margin: 1.5rem 0;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 0.9rem;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      background: rgba(0, 0, 0, 0.3);
+      color: white;
+      text-align: center;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      outline: none;
+    }
+
+    .input-field:focus {
+      border-color: var(--accent-pink);
+    }
+
+    .btn-grid {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .btn-secondary {
+      flex: 1;
+      padding: 0.85rem;
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      background: rgba(255, 255, 255, 0.05);
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* VIEW 2: SWIPER DECK */
+    .deck-container {
+      width: 100%;
+      max-width: 360px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1rem;
+    }
+
+    .movie-card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .poster-box img {
+      width: 100%;
+      height: 380px;
+      object-fit: cover;
+      display: block;
+      background: #111827;
+    }
+
+    .movie-details {
+      padding: 1.25rem;
+      text-align: left;
+    }
+
+    .movie-details h2 {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .movie-details p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+      max-height: 60px;
+      overflow: hidden;
+    }
+
+    .action-bar {
+      display: flex;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .action-bar button {
+      flex: 1;
+      padding: 1.1rem;
+      border: none;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .btn-skip {
+      background: rgba(255, 255, 255, 0.03);
+      color: #ef4444;
+    }
+
+    .btn-like {
+      background: var(--accent-green);
+      color: white;
+    }
+
+    /* VIEW 3: RECEIPT OVERLAY */
+    .receipt-container {
+      width: 340px;
+      height: 500px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      position: relative;
+      margin: 0 auto;
+    }
+
+    .receipt-text-overlay {
+      position: absolute;
+      top: 145px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 155px;
+      font-family: monospace;
+      text-align: center;
+      color: #111827;
+    }
+
+    .receipt-stamp {
+      border: 3px dashed #ef4444;
+      color: #ef4444;
+      font-weight: 900;
+      font-size: 1.1rem;
+      display: inline-block;
+      padding: 0.2rem 0.5rem;
+      border-radius: 6px;
+      transform: rotate(-12deg);
+      margin-top: 0.75rem;
+    }
   </style>
 </head>
 <body>
 
-  <div id="screen-lobby" class="landing-stage-wrapper">
-    <div class="landing-form-glass">
-      <h1 class="main-logo-text">movie night</h1>
-      <p class="sub-tagline">Swipe together, match immediately, and print your movie ticket! 🎟️✨</p>
-      
-      <button id="btn-solo" class="btn-solo-launcher">🍿 Solo Mode (Just Me)</button>
-      
-      <div class="separator-line">--- OR SYNC
+  <div id="view-lobby" class="landing-wrapper" style="background-image: url('./public/background.png');">
+    <div class="app-card">
+      <h1 class="brand-title">movie night</h1>
+      <p class="subtitle">Sync up, swipe together, and match your movie picks instantly.</p>
+
+      <button id="btn-start-solo" class="btn-primary">🍿 Start Solo Mode</button>
+
+      <div class="divider">OR SYNC ROOM</div>
+
+      <input type="text" id="room-code" placeholder="Enter Room Code..." class="input-field" />
+
+      <div class="btn-grid">
+        <button id="btn-create-room" class="btn-secondary">Create</button>
+        <button id="btn-join-room" class="btn-secondary">Join</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-swiper" class="deck-container hidden">
+    <div class="movie-card">
+      <div class="poster-box">
+        <img id="movie-poster" src="" alt="Poster" />
+      </div>
+      <div class="movie-details">
+        <h2 id="movie-title">Loading Movies...</h2>
+        <p id="movie-overview"></p>
+      </div>
+      <div class="action-bar">
+        <button id="btn-skip" class="btn-skip">❌ Skip</button>
+        <button id="btn-like" class="btn-like">💖 Like</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="view-receipt" class="deck-container hidden">
+    <div class="receipt-container" style="background-image: url('./public/result.png');">
+      <div class="receipt-text-overlay">
+        <h3 style="margin: 0; font-size: 0.9rem;">MOVIENIGHT INC</h3>
+        <p style="margin: 0; font-size: 0.6rem;">VALIDATED TICKET</p>
+        <p style="margin: 0.2rem 0;">- - - - - - - - - -</p>
+        <p id="matched-title" style="font-weight: bold; margin: 0.4rem 0; font-size: 0.8rem; word-break: break-word;"></p>
+        <p id="matched-score" style="margin: 0; font-size: 0.7rem;"></p>
+        <p style="margin: 0.2rem 0;">- - - - - - - - - -</p>
+        <div class="receipt-stamp">MATCHED!</div>
+      </div>
+    </div>
+    <button onclick="window.print()" class="btn-primary" style="margin-top: 1rem;">🖨️ Print Ticket</button>
+  </div>
+
+  <script>
+    const TMDB_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWVjMjlmODZlYWUwNDQ1MjllY2Y2NzA5YzlhNjhhMCIsIm5iZiI6MTg1MDkwMTY5LjcxMSwic3ViIjoiNmE2NjUwNzlkODk1M2U4NDdjM2Y4OGViIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.l9UN7l5oXlUZ-WuT87nlBgSDyqp6Ok0OpstKak0303g";
+    let movies = [];
+    let idx = 0;
+
+    const lobby = document.getElementById('view-lobby');
+    const swiper = document.getElementById('view-swiper');
+    const receipt = document.getElementById('view-receipt');
+
+    async function fetchCatalog() {
+      try {
+        const res = await fetch('https://api.themoviedb.org/3/trending/movie/week?page=1', {
+          headers: { Authorization: `Bearer ${TMDB_TOKEN}` }
+        });
+        const data = await res.json();
+        movies = data.results || [];
+        renderMovie();
+      } catch (err) {
+        console.error("TMDB Fetch Error:", err);
+      }
+    }
+
+    function renderMovie() {
+      if (idx >= movies.length) {
+        document.getElementById('movie-title').innerText = "End of deck!";
+        document.getElementById('movie-overview').innerText = "No more titles remaining.";
+        return;
+      }
+      const item = movies[idx];
+      document.getElementById('movie-title').innerText = item.title;
+      document.getElementById('movie-overview').innerText = item.overview || '';
+      document.getElementById('movie-poster').src = item.poster_path 
+        ? `https://image.tmdb.org/t/p/w500${item.poster_path}`
+        : 'https://via.placeholder.com/500x750?text=No+Poster';
+    }
+
+    function launchSwiper() {
+      lobby.classList.add('hidden');
+      swiper.classList.remove('hidden');
+      fetchCatalog();
+    }
+
+    document.getElementById('btn-start-solo').onclick = launchSwiper;
+    document.getElementById('btn-create-room').onclick = launchSwiper;
+    document.getElementById('btn-join-room').onclick = launchSwiper;
+
+    document.getElementById('btn-skip').onclick = () => {
+      idx++;
+      renderMovie();
+    };
+
+    document.getElementById('btn-like').onclick = () => {
+      const item = movies[idx];
+      swiper.classList.add('hidden');
+      receipt.classList.remove('hidden');
+      document.getElementById('matched-title').innerText = item.title.toUpperCase();
+      document.getElementById('matched-score').innerText = `RATING: ⭐ ${item.vote_average ? item.vote_average.toFixed(1) : 'N/A'}/10`;
+    };
+  </script>
+</body>
+</html>
