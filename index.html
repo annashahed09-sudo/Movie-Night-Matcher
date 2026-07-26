@@ -1,15 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Movie Night Matcher 💖</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="./src/main.jsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Movie Night Matcher 💖</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./src/index.css" />
+
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function App() {
+      const [view, setView] = useState("lobby"); // 'lobby', 'swiper', 'receipt'
+      const [roomCode, setRoomCode] = useState("");
+      const [movies, setMovies] = useState([]);
+      const [currentIndex, setCurrentIndex] = useState(0);
+      const [matchedMovie, setMatchedMovie] = useState(null);
+
+      const TMDB_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWVjMjlmODZlYWUwNDQ1MjllY2Y2NzA5YzlhNjhhMCIsIm5iZiI6MTg1MDkwMTY5LjcxMSwic3ViIjoiNmE2NjUwNzlkODk1M2U4NDdjM2Y4OGViIiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.l9UN7l5oXlUZ-WuT87nlBgSDyqp6Ok0OpstKak0303g";
+
+      const loadMovies = async () => {
+        try {
+          const res = await fetch("https://api.themoviedb.org/3/trending/movie/week?page=1", {
+            headers: { Authorization: `Bearer ${TMDB_ACCESS_TOKEN}` }
+          });
+          const data = await res.json();
+          setMovies(data.results || []);
+        } catch (e) {
+          console.error("TMDB error:", e);
+        }
+      };
+
+      const startSolo = () => {
+        loadMovies();
+        setView("swiper");
+      };
+
+      const handleSwipe = (liked) => {
+        if (liked && movies[currentIndex]) {
+          setMatchedMovie(movies[currentIndex]);
+          setView("receipt");
+        } else {
+          setCurrentIndex(prev => prev + 1);
+        }
+      };
+
+      const currentMovie = movies[currentIndex];
+
+      return (
+        <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          
+          {/* LOBBY VIEW */}
+          {view === "lobby" && (
+            <div className="landing-stage-wrapper" style={{ backgroundImage: "url('./public/background.png')" }}>
+              <div className="landing-form-glass">
+                <h1 className="main-logo-text">movie night</h1>
+                <p className="sub-tagline">Swipe together, match immediately, and print out your movie receipt! 🎟️✨</p>
+
+                <button onClick={startSolo} className="btn-solo-launcher">
+                  🍿 Solo Mode (Just Me)
+                </button>
+
+                <div className="separator-line"><span>or sync screens</span></div>
+
+                <input 
+                  type="text" 
+                  placeholder="enter room code..." 
+                  value={roomCode} 
+                  onChange={(e) => setRoomCode(e.target.value)}
+                  className="room-input-box" 
+                />
+
+                <div className="dual-action-row">
+                  <button onClick={startSolo} className="btn-create">Create Room</button>
+                  <button onClick={startSolo} className="btn-join">Join Room</button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* SWIPER VIEW */}
+          {view === "swiper" && (
+            <div className="app-workspace-standard-bg">
+              <header className="workspace-navbar">
+                <span>Mode: <strong>{roomCode ? `Room: ${roomCode}` : 'Solo Play'}</strong></span>
+              </header>
+
+              <main className="deck-viewport">
+                {currentMovie ? (
+                  <div className="card-container-relative">
+                    <div className="animated-swipe-card">
+                      <div className="card-poster-frame">
+                        <img 
+                          src={currentMovie.poster_path ? `https://image.tmdb.org/t/p/w500${currentMovie.poster_path}` : 'https://via.placeholder.com/500'} 
+                          alt={currentMovie.title} 
+                        />
+                        <div className="card-rating-tag">⭐ {currentMovie.vote_average ? currentMovie.vote_average.toFixed(1) : 'N/A'}</div>
+                      </div>
+                      <div className="card-body-metadata">
+                        <h2>{currentMovie.title}</h2>
+                        <p>{currentMovie.overview || "No overview available."}</p>
+                      </div>
+                      <div className="card-button-footer-row">
+                        <button onClick={() => handleSwipe(false)} className="btn-footer-skip">❌ Skip</button>
+                        <button onClick={() => handleSwipe(true)} className="btn-footer-like">💖 Like</button>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="status-label">Loading movies... 🍿</div>
+                )}
+              </main>
+            </div>
+          )}
+
+          {/* RECEIPT VIEW */}
+          {view === "receipt" && matchedMovie && (
+            <div className="app-workspace-standard-bg">
+              <div className="printer-assembly-deck">
+                <div className="hardware-print-casing animated-rollout" style={{ backgroundImage: "url('./public/result.png')" }}>
+                  <div className="receipt-text-overlay">
+                    <h2 className="ticket-title">MOVIENIGHT, INC.</h2>
+                    <p className="ticket-subtitle">MODE: SOLO</p>
+                    <p className="ticket-subtitle">{new Date().toLocaleDateString()}</p>
+
+                    <div className="ticket-dashed-bar">- - - - - - - - - - -</div>
+                    <div className="ticket-table-hdr"><span>QTY / ITEM SELECTION</span><span>COST</span></div>
+                    <div className="ticket-dashed-bar">- - - - - - - - - - -</div>
+
+                    <div
