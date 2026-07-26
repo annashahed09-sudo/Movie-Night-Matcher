@@ -1,4 +1,3 @@
-// Global State Storage populated live from the API
 let drivers = [];
 let tracks = {
     hungaroring: { technicalWeight: 0.9, powerWeight: 0.2, historicWeight: 0.4 },
@@ -8,21 +7,15 @@ let tracks = {
 };
 let currentTrack = 'hungaroring';
 
-// 1. Core Boot Function: Automatically pull data over the web on load
+// Automated API Fetch Lifecycle Connection Engine
 async function loadLiveF1Data() {
     try {
-        const moistureVal = document.getElementById('moisture-val');
-        if (moistureVal) moistureVal.innerText = "Connecting to Telemetry Feed...";
-
-        // FIXED API URL: Pointing to the actual active JSON data stream endpoint
         const response = await fetch('https://openf1.org');
         const apiDrivers = await response.json();
 
-        // Filter and isolate unique primary driver profiles
         const uniqueDrivers = [];
         const seenNames = new Set();
 
-        // Process up to 6 key drivers to maintain a clean layout view
         for (const d of apiDrivers) {
             if (d.full_name && !seenNames.has(d.full_name) && uniqueDrivers.length < 6) {
                 seenNames.add(d.full_name);
@@ -35,7 +28,7 @@ async function loadLiveF1Data() {
                     wet: 75 + Math.floor(Math.random() * 20),
                     technical: 80 + Math.floor(Math.random() * 15),
                     power: 80 + Math.floor(Math.random() * 15),
-                    history: [1, 3, 2, 5, 4] 
+                    history: [1, 2, 4, 3, 5] // Auto baseline history sequence configuration
                 });
             }
         }
@@ -44,8 +37,7 @@ async function loadLiveF1Data() {
         calculateProbabilities();
 
     } catch (error) {
-        console.error("Telemetry fetch failed, using fallback database matrices:", error);
-        // Backup dataset if the live API server is down or slow
+        console.error("API error, executing safe offline matrices arrays fallback:", error);
         drivers = [
             { name: "Kimi Antonelli", team: "Mercedes", color: "#00a19c", img: "https://formula1.com/content/dam/fom-website/drivers/K/KIMANT01_Kimi_Antonelli/kimant01.png", dry: 88, wet: 78, technical: 85, power: 90, history: [1, 2, 1, 3, 2] },
             { name: "Lewis Hamilton", team: "Ferrari", color: "#ef1a2d", img: "https://formula1.com/content/dam/fom-website/drivers/L/LEWHAM01_Lewis_Hamilton/lewham01.png", dry: 84, wet: 86, technical: 88, power: 85, history: [3, 1, 4, 2, 5] },
