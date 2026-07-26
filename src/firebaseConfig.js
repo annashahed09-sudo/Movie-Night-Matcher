@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
-// Your verified live Firebase project configuration keys
 const firebaseConfig = {
   apiKey: "AIzaSyBtJCeBwpanGNILduGPYdkq19NuXZqIOPQ",
   authDomain: "movie-night-1c77a.firebaseapp.com",
