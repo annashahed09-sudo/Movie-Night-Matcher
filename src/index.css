@@ -1,105 +1,310 @@
-:root { font-family: Inter, system-ui, sans-serif; background-color: #0f172a; color: #ffffff; }
-body { margin: 0; display: flex; align-items: center; min-height: 100vh; width: 100vw; justify-content: center; overflow-x: hidden; }
-#root { width: 100%; display: flex; justify-content: center; }
+:root {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #0f172a;
+  color: #ffffff;
+}
 
-/* --- LANDING STAGE LOBBY ONLY (Safeguards background.png here) --- */
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
+#root {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* --- LANDING STAGE --- */
 .landing-stage-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   min-height: 100vh;
-  background-image: url('/background.png');
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .landing-form-glass {
-  background: rgba(30, 41, 59, 0.95);
-  backdrop-filter: blur(8px);
-  padding: 3rem 2rem;
-  border-radius: 1.5rem;
+  background: rgba(30, 41, 59, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2.5rem 2rem;
+  border-radius: 1.25rem;
   width: 90%;
   max-width: 400px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   box-sizing: border-box;
 }
 
 .main-logo-text {
   font-family: 'Comic Sans MS', 'Architects Daughter', cursive, sans-serif;
-  font-size: 3.2rem;
+  font-size: 3rem;
   color: #f43f5e;
-  margin: 0 0 0.4rem 0;
-  letter-spacing: -1.5px;
+  margin: 0 0 0.5rem 0;
+  letter-spacing: -1px;
 }
 
-.sub-tagline { font-size: 0.9rem; color: #94a3b8; margin-bottom: 2rem; line-height: 1.4; }
-.btn-solo-launcher { background: #6366f1; color: white; width: 100%; padding: 0.9rem; border-radius: 0.75rem; font-weight: bold; border: none; cursor: pointer; }
-.btn-solo-launcher:hover { background: #4f46e5; }
+.sub-tagline {
+  font-size: 0.9rem;
+  color: #94a3b8;
+  margin-bottom: 1.75rem;
+  line-height: 1.4;
+}
 
-.separator-line { display: flex; align-items: center; margin: 1.5rem 0; color: #64748b; font-size: 0.8rem; font-weight: bold; text-transform: uppercase; }
-.separator-line::before, .separator-line::after { content: ""; flex: 1; border-bottom: 1px solid #334155; }
-.separator-line span { padding: 0 0.75rem; }
+.btn-solo-launcher {
+  background: #6366f1;
+  color: white;
+  width: 100%;
+  padding: 0.9rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.btn-solo-launcher:hover {
+  background: #4f46e5;
+}
+
+.separator-line {
+  display: flex;
+  align-items: center;
+  margin: 1.25rem 0;
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.separator-line::before,
+.separator-line::after {
+  content: "";
+  flex: 1;
+  border-bottom: 1px solid #334155;
+}
+
+.separator-line span {
+  padding: 0 0.75rem;
+}
 
 .room-input-box {
   width: 100%;
-  padding: 0.9rem;
+  padding: 0.85rem;
   border-radius: 0.75rem;
   border: 2px solid #334155;
   background: #0f172a;
   color: white;
-  font-size: 1.1rem;
+  font-size: 1rem;
   text-align: center;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
   outline: none;
   box-sizing: border-box;
 }
-.room-input-box:focus { border-color: #f43f5e; }
 
-.dual-action-row { display: flex; gap: 1rem; width: 100%; }
-.dual-action-row button { flex: 1; padding: 0.85rem; font-weight: bold; border-radius: 0.75rem; border: none; cursor: pointer; }
-.btn-create { background: #f43f5e; color: white; }
-.btn-join { background: #475569; color: white; }
-/* --- RUNNING SWIPER STAGE GENERAL BACKDROP --- */
+.room-input-box:focus {
+  border-color: #f43f5e;
+}
+
+.dual-action-row {
+  display: flex;
+  gap: 0.75rem;
+  width: 100%;
+}
+
+.dual-action-row button {
+  flex: 1;
+  padding: 0.85rem;
+  font-weight: 700;
+  border-radius: 0.75rem;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.dual-action-row button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-create {
+  background: #f43f5e;
+  color: white;
+}
+
+.btn-join {
+  background: #475569;
+  color: white;
+}
+
+/* --- SWIPER WORKSPACE --- */
 .app-workspace-standard-bg {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100vw;
   min-height: 100vh;
-  background-color: #0f172a; /* Removes background.png layout from standard loops entirely */
+  background-color: #0f172a;
   padding: 1rem;
   box-sizing: border-box;
 }
 
-.workspace-navbar { display: flex; justify-content: space-between; align-items: center; width: 100%; max-width: 400px; background: #1e293b; padding: 0.8rem 1.2rem; border-radius: 0.5rem; font-size: 0.85rem; margin-bottom: 1rem; box-sizing: border-box; }
-.badge-likes { background: #6366f1; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: bold; }
-.deck-viewport { width: 100%; max-width: 400px; display: flex; justify-content: center; }
+.workspace-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  background: #1e293b;
+  padding: 0.8rem 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
 
-.card-container-relative { position: relative; width: 100%; height: 560px; display: flex; justify-content: center; touch-action: none; }
-.animated-swipe-card { position: absolute; background: #1e293b; border-radius: 1.25rem; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.4); display: flex; flex-direction: column; width: 100%; height: 100%; cursor: grab; user-select: none; }
+.badge-likes {
+  background: #6366f1;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
+}
 
-.card-poster-frame { position: relative; width: 100%; height: 350px; }
-.card-poster-frame img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-.card-rating-tag { position: absolute; top: 1rem; right: 1rem; background: rgba(15,23,42,0.85); padding: 0.3rem 0.6rem; border-radius: 0.4rem; font-weight: bold; color: #fbbf24; font-size: 0.85rem; }
+.deck-viewport {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+}
 
-.card-body-metadata { padding: 1.2rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-start; }
-.card-body-metadata h2 { margin: 0 0 0.4rem 0; font-size: 1.4rem; color: white; }
-.card-body-metadata p { font-size: 0.85rem; color: #cbd5e1; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; margin: 0; }
+.card-container-relative {
+  position: relative;
+  width: 100%;
+  height: 560px;
+  display: flex;
+  justify-content: center;
+  touch-action: none;
+}
 
-.card-button-footer-row { display: flex; border-top: 1px solid #334155; }
-.card-button-footer-row button { flex: 1; padding: 1.1rem; font-size: 1.1rem; font-weight: bold; border-radius: 0; border: none; cursor: pointer; }
-.btn-footer-skip { background: #ef4444; color: white; }
-.btn-footer-like { background: #22c55e; color: white; }
-.status-label { text-align: center; padding: 4rem 2rem; color: #94a3b8; font-size: 1rem; }
+.animated-swipe-card {
+  position: absolute;
+  background: #1e293b;
+  border-radius: 1.25rem;
+  overflow: hidden;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  cursor: grab;
+  user-select: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
 
-/* --- HARDWARE PRINTER SCREEN (Hooks up reslu.png) --- */
-.printer-assembly-deck { display: flex; flex-direction: column; align-items: center; width: 100%; max-width: 400px; margin-top: 1rem;}
+.card-poster-frame {
+  position: relative;
+  width: 100%;
+  height: 350px;
+}
+
+.card-poster-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+.card-rating-tag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(15, 23, 42, 0.85);
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.4rem;
+  font-weight: bold;
+  color: #fbbf24;
+  font-size: 0.85rem;
+  backdrop-filter: blur(4px);
+}
+
+.card-body-metadata {
+  padding: 1.2rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.card-body-metadata h2 {
+  margin: 0 0 0.4rem 0;
+  font-size: 1.4rem;
+  color: white;
+}
+
+.card-body-metadata p {
+  font-size: 0.85rem;
+  color: #cbd5e1;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin: 0;
+}
+
+.card-button-footer-row {
+  display: flex;
+  border-top: 1px solid #334155;
+}
+
+.card-button-footer-row button {
+  flex: 1;
+  padding: 1.1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-footer-skip {
+  background: #ef4444;
+  color: white;
+}
+
+.btn-footer-like {
+  background: #22c55e;
+  color: white;
+}
+
+.status-label {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #94a3b8;
+  font-size: 1rem;
+}
+
+/* --- RECEIPT PRINTER SCREEN --- */
+.printer-assembly-deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 1rem;
+}
 
 .hardware-print-casing {
-  background-image: url('/reslu.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center top;
@@ -109,45 +314,163 @@ body { margin: 0; display: flex; align-items: center; min-height: 100vh; width: 
   overflow: hidden;
 }
 
-.animated-rollout { animation: ejectReceipt 1.4s cubic-bezier(0.15, 0.85, 0.35, 1) forwards; }
-@keyframes ejectReceipt {
-  0% { transform: scaleY(0.85) translateY(-30px); opacity: 0; }
-  100% { transform: scaleY(1) translateY(0); opacity: 1; }
+.animated-rollout {
+  animation: ejectReceipt 1.4s cubic-bezier(0.15, 0.85, 0.35, 1) forwards;
 }
 
-/* Positions text strings perfectly within the boundaries of the white ticket ribbon graphic */
+@keyframes ejectReceipt {
+  0% {
+    transform: scaleY(0.85) translateY(-30px);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1) translateY(0);
+    opacity: 1;
+  }
+}
+
 .receipt-text-overlay {
   position: absolute;
-  top: 152px; 
+  top: 152px;
   left: 50%;
   transform: translateX(-50%);
-  width: 155px; 
+  width: 155px;
   font-family: 'Courier New', Courier, monospace;
   text-align: center;
   color: #111827;
   line-height: 1.2;
 }
 
-.ticket-title { font-size: 0.8rem; font-weight: 900; margin: 0; letter-spacing: 0.5px; }
-.ticket-subtitle { font-size: 0.55rem; margin: 0; color: #4b5563; }
-.ticket-dashed-bar { margin: 0.3rem 0; letter-spacing: -1px; color: #6b7280; font-size: 0.75rem; font-weight: bold; }
+.ticket-title {
+  font-size: 0.8rem;
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
 
-.ticket-table-hdr { display: flex; justify-content: space-between; font-size: 0.6rem; font-weight: bold; color: #374151; }
-.ticket-data-row { display: flex; justify-content: space-between; font-size: 0.6rem; margin-bottom: 0.25rem; text-align: left; }
-.ticket-movie-title { font-weight: bold; max-width: 70%; word-wrap: break-word; }
-.ticket-nested-meta { font-size: 0.55rem; color: #4b5563; text-align: left; margin: -0.15rem 0 0.25rem 0.4rem; }
+.ticket-subtitle {
+  font-size: 0.55rem;
+  margin: 0;
+  color: #4b5563;
+}
 
-.ticket-footer h3 { color: #047857; font-size: 0.75rem; margin: 0.3rem 0 0.1rem 0; }
-.ticket-barcode { font-size: 1.1rem; letter-spacing: 0.5px; margin: 0.3rem 0 0.1rem 0; user-select: none; }
-.ticket-serial { font-size: 0.5rem; color: #6b7280; margin: 0; }
+.ticket-dashed-bar {
+  margin: 0.3rem 0;
+  letter-spacing: -1px;
+  color: #6b7280;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
 
-.control-button-deck { display: flex; flex-direction: column; gap: 0.75rem; width: 85%; margin-top: 0.5rem; }
-.action-btn-print { background: #059669; color: white; padding: 0.8rem; border-radius: 0.5rem; font-weight: bold; font-size: 0.95rem; border: none; cursor: pointer;}
-.action-btn-dismiss { background: transparent; border: 2px solid #475569; color: #94a3b8; padding: 0.8rem; border-radius: 0.5rem; font-weight: bold; border: none; cursor: pointer;}
+.ticket-table-hdr {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  font-weight: bold;
+  color: #374151;
+}
+
+.ticket-data-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.6rem;
+  margin-bottom: 0.25rem;
+  text-align: left;
+}
+
+.ticket-movie-title {
+  font-weight: bold;
+  max-width: 70%;
+  word-wrap: break-word;
+}
+
+.ticket-nested-meta {
+  font-size: 0.55rem;
+  color: #4b5563;
+  text-align: left;
+  margin: -0.15rem 0 0.25rem 0.4rem;
+}
+
+.ticket-footer h3 {
+  color: #047857;
+  font-size: 0.75rem;
+  margin: 0.3rem 0 0.1rem 0;
+}
+
+.ticket-barcode {
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  margin: 0.3rem 0 0.1rem 0;
+  user-select: none;
+}
+
+.ticket-serial {
+  font-size: 0.5rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.receipt-ink-stamp {
+  position: absolute;
+  top: 40%;
+  left: 15%;
+  border: 3px solid #dc2626;
+  color: #dc2626;
+  font-weight: 900;
+  font-size: 1.2rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.control-button-deck {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 85%;
+  margin-top: 0.5rem;
+}
+
+.action-btn-print {
+  background: #059669;
+  color: white;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+}
+
+.action-btn-dismiss {
+  background: transparent;
+  border: 2px solid #475569;
+  color: #94a3b8;
+  padding: 0.8rem;
+  border-radius: 0.5rem;
+  font-weight: bold;
+  cursor: pointer;
+}
 
 @media print {
-  body { background: #ffffff !important; color: #000000 !important; }
-  .control-button-deck, .workspace-navbar { display: none !important; }
-  .hardware-print-casing { background-image: none !important; width: 100% !important; height: auto !important; }
-  .receipt-text-overlay { position: static !important; transform: none !important; width: 100% !important; padding: 2rem; }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  .control-button-deck,
+  .workspace-navbar {
+    display: none !important;
+  }
+  .hardware-print-casing {
+    background-image: none !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+  .receipt-text-overlay {
+    position: static !important;
+    transform: none !important;
+    width: 100% !important;
+    padding: 2rem;
+  }
 }
