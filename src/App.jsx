@@ -24,8 +24,8 @@ export default function App() {
   const opacity = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
   const controls = useAnimation();
 
-  // Resolves public assets seamlessly on GitHub Pages base subpaths
-  const baseUrl = import.meta.env.BASE_URL || "/";
+  // Handle GitHub Pages base URL cleanly
+  const baseUrl = import.meta.env.BASE_URL || "./";
 
   const startSoloMode = async () => {
     setLoading(true);
@@ -47,7 +47,7 @@ export default function App() {
       setInSession(true);
     } catch (err) {
       console.error(err);
-      alert("Error creating room ledger.");
+      alert("Error creating room!");
     }
     setLoading(false);
   };
@@ -150,6 +150,7 @@ export default function App() {
     }
   };
 
+  // 1. LOBBY VIEW
   if (!inSession) {
     return (
       <div 
@@ -188,6 +189,7 @@ export default function App() {
     );
   }
 
+  // 2. RECEIPT VIEW
   if (showReceipt && matchedMovie) {
     return (
       <div className="app-workspace-standard-bg">
@@ -244,6 +246,7 @@ export default function App() {
     );
   }
 
+  // 3. SWIPER VIEW
   const activeMovie = movies[currentIndex];
   return (
     <div className="app-workspace-standard-bg">
