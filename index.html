@@ -1,97 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Movie Night Matcher</title>
-  <link rel="stylesheet" href="index.css" />
-</head>
-<body>
-
-  <div id="lobby-screen" class="landing-stage-wrapper">
-    <div class="landing-form-glass">
-      <h1 class="main-logo-text">movie night</h1>
-      <p class="sub-tagline">Swipe together, match immediately, and print out your cinema receipt voucher.</p>
-      
-      <button id="btn-solo" class="btn-solo-launcher">🍿 Solo Mode (Just Me)</button>
-      
-      <div class="separator-line"><span>or sync screens</span></div>
-
-      <input type="text" id="room-code-input" placeholder="enter room password..." class="room-input-box" />
-      
-      <div class="dual-action-row">
-        <button id="btn-create" class="btn-create">Create Room</button>
-        <button id="btn-join" class="btn-join">Join Room</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="swiper-screen" class="app-workspace-standard-bg hidden">
-    <header class="workspace-navbar">
-      <span id="mode-display">Mode: Solo Play</span>
-      <span id="likes-badge" class="badge-likes hidden">Likes Logged: 0</span>
-    </header>
-    
-    <main class="deck-viewport">
-      <div id="card-deck" class="card-container-relative">
-        <div id="active-card" class="animated-swipe-card">
-          <div class="card-poster-frame">
-            <img id="card-img" src="" alt="Movie Poster" draggable="false" />
-            <div id="card-rating" class="card-rating-tag">⭐ 0.0</div>
-          </div>
-          <div class="card-body-metadata">
-            <h2 id="card-title">Loading...</h2>
-            <p id="card-overview">Fetching popular movies from TMDB...</p>
-          </div>
-          <div class="card-button-footer-row">
-            <button id="btn-skip" class="btn-footer-skip">❌ Skip</button>
-            <button id="btn-like" class="btn-footer-like">💖 Like</button>
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <div id="receipt-screen" class="app-workspace-standard-bg hidden">
-    <div class="printer-assembly-deck">
-      <div class="hardware-print-casing animated-rollout">
-        <div class="receipt-text-overlay">
-          <h2 class="ticket-title">MOVIENIGHT, INC.</h2>
-          <p id="receipt-mode" class="ticket-subtitle">MODE: SOLO</p>
-          <p id="receipt-date" class="ticket-subtitle"></p>
-          
-          <div class="ticket-dashed-bar">- - - - - - - - - - -</div>
-          <div class="ticket-table-hdr"><span>QTY / ITEM SELECTION</span><span>COST</span></div>
-          <div class="ticket-dashed-bar">- - - - - - - - - - -</div>
-          
-          <div class="ticket-data-row">
-            <span id="receipt-movie-title" class="ticket-movie-title">1x MOVIE</span>
-            <span>$0.00</span>
-          </div>
-          <p id="receipt-movie-rating" class="ticket-nested-meta">RATING: ⭐ 0/10</p>
-
-          <div class="ticket-data-row"><span>2x SNUGGLE BLANKETS</span><span>INCL</span></div>
-          <div class="ticket-dashed-bar">- - - - - - - - - - -</div>
-          <div class="ticket-data-row font-bold"><span>TOTAL AMT</span><span>$0.00</span></div>
-          <div class="ticket-dashed-bar">- - - - - - - - - - -</div>
-          
-          <div class="ticket-footer">
-            <h3>🎬 TICKET VALIDATED 🎬</h3>
-            <div class="ticket-barcode">||||| | ||||| ||</div>
-            <p id="receipt-serial" class="ticket-serial">ID: #000</p>
-          </div>
-
-          <div class="receipt-ink-stamp">MATCHED</div>
-        </div>
-      </div>
-      
-      <div class="control-button-deck">
-        <button onclick="window.print()" class="action-btn-print">🖨️ Save or Print Receipt</button>
-        <button id="btn-restart" class="action-btn-dismiss">🎬 Keep Swiping</button>
-      </div>
-    </div>
-  </div>
-
-  <script type="module" src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movie Night Matcher 💖</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
