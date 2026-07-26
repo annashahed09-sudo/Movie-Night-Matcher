@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Grand Prix Analytics and Win Predictor</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="analytics-hub">
+        <header>
+            <h1>Race Probability Simulator</h1>
+            <p>Predictive Modeling Core Engine — 2026 Regulations Data Validation</p>
+        </header>
+
+        <!-- Track Selection Grid -->
+        <div class="track-grid">
+            <div class="track-card active" onclick="switchTrack('hungaroring', this)">
+                <h3>Hungaroring</h3>
+                <span>Hungary</span>
+            </div>
+            <div class="track-card" onclick="switchTrack('zandvoort', this)">
+                <h3>Zandvoort</h3>
+                <span>Netherlands</span>
+            </div>
+            <div class="track-card" onclick="switchTrack('monza', this)">
+                <h3>Monza</h3>
+                <span>Italy</span>
+            </div>
+            <div class="track-card" onclick="switchTrack('spa', this)">
+                <h3>Spa-Francorchamps</h3>
+                <span>Belgium</span>
+            </div>
+        </div>
+
+        <!-- Telemetry Configuration Sliders -->
+        <div class="telemetry-sliders">
+            <div class="slider-group">
+                <div class="slider-header">
+                    <span>Track Moisture Conditions</span>
+                    <span id="moisture-val">Bone Dry</span>
+                </div>
+                <input type="range" id="moisture-slider" min="0" max="100" value="0" oninput="calculateProbabilities()">
+            </div>
+            <div class="slider-group">
+                <div class="slider-header">
+                    <span>Team Upgrade Status</span>
+                    <span id="upgrade-val">Baseline Performance</span>
+                </div>
+                <input type="range" id="upgrade-slider" min="0" max="100" value="0" oninput="calculateProbabilities()">
+            </div>
+        </div>
+
+        <!-- Dynamic Podium Showcase -->
+        <div class="podium-showcase" id="podium-area"></div>
+
+        <!-- Full Standings Telemetry Breakdown -->
+        <div class="telemetry-list" id="telemetry-output"></div>
+    </div>
+
+    <!-- Correct linking order: data loads first, app logic loads second -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
