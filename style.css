@@ -139,7 +139,6 @@ input[type="range"]::-webkit-slider-thumb {
     border-radius: 50%;
     background: var(--f1-red);
     box-shadow: 0 0 8px var(--f1-red);
-    transition: transform 0.1s;
 }
 
 .podium-showcase {
