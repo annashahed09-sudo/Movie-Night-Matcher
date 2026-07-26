@@ -12,7 +12,6 @@ function calculateProbabilities() {
     const upgrades = parseInt(document.getElementById('upgrade-slider').value);
     const trackSpec = tracks[currentTrack];
 
-    // Update Slider Label Text Readouts
     document.getElementById('moisture-val').innerText = moisture === 0 ? "Bone Dry" : moisture < 40 ? "Damp Circuit" : moisture < 75 ? "Intermediate Conditions" : "Monsoon Downpour";
     document.getElementById('upgrade-val').innerText = upgrades === 0 ? "Baseline Form" : upgrades < 50 ? "Minor Package Applied" : "Major Overhaul Package";
 
@@ -54,21 +53,21 @@ function renderPodium(topThree) {
             <div class="driver-avatar-container">
                 <img src="${p2.driver.img}" alt="${p2.driver.name}">
             </div>
-            <div class="podium-name">${p2.driver.name.split(' ')[1]}</div>
+            <div class="podium-name">${p2.driver.name.split(' ')[0]}</div>
             <div class="podium-block">2</div>
         </div>
         <div class="podium-spot p1">
             <div class="driver-avatar-container">
                 <img src="${p1.driver.img}" alt="${p1.driver.name}">
             </div>
-            <div class="podium-name">${p1.driver.name.split(' ')[1]}</div>
+            <div class="podium-name">${p1.driver.name.split(' ')[0]}</div>
             <div class="podium-block">1</div>
         </div>
         <div class="podium-spot p3">
             <div class="driver-avatar-container">
                 <img src="${p3.driver.img}" alt="${p3.driver.name}">
             </div>
-            <div class="podium-name">${p3.driver.name.split(' ')[1]}</div>
+            <div class="podium-name">${p3.driver.name.split(' ')[0]}</div>
             <div class="podium-block">3</div>
         </div>
     `;
@@ -101,5 +100,4 @@ function renderTelemetryList(pool) {
     });
 }
 
-// Initial engine kickoff on window setup completion
 window.onload = calculateProbabilities;
