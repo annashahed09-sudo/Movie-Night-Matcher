@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Win95 Pomodoro Player ⏱️</title>
+  <title>PomoTimer95 ⏱️</title>
 
   <style>
-    /* From Uiverse.io by reglobby - Scaled & Adapted for Pomodoro */ 
+    /* Windows 95 Theme Tokens */ 
     :root {
       --card-bg: #c0c0c0;
       --card-border-light: #ffffff;
@@ -39,7 +39,7 @@
     .win95-card {
       font-size: 1.15rem;
       width: 100%;
-      max-width: 520px; /* Made larger on screen */
+      max-width: 520px;
       background: var(--card-bg);
       border: 0.0625em solid;
       border-color: var(--card-border-light) var(--card-border-darker)
@@ -187,7 +187,7 @@
       transition: left 0.3s ease;
     }
 
-    /* WIN95 CONTROL BUTTONS */
+    /* CONTROLS */
     .player-controls {
       display: flex;
       justify-content: center;
@@ -207,9 +207,7 @@
       outline: none;
     }
 
-    .ctrl-btn:hover {
-      background: #d4d4d4;
-    }
+    .ctrl-btn:hover { background: #d4d4d4; }
 
     .ctrl-btn:active {
       border-color: var(--card-border-darker) var(--card-border-light)
@@ -262,11 +260,10 @@
       align-items: center;
       margin-bottom: 0.5em;
       font-size: 0.8em;
+      color: #000;
     }
 
-    .custom-group:last-child {
-      margin-bottom: 0;
-    }
+    .custom-group:last-child { margin-bottom: 0; }
 
     .win95-num-input {
       width: 60px;
@@ -297,4 +294,200 @@
       color: var(--card-text);
       padding: 0.15em 0.35em;
       border: 0.0625em solid;
-      border-color: var
+      border-color: var(--card-border-dark) var(--card-border-light)
+        var(--card-border-light) var(--card-border-dark);
+      flex: 1;
+    }
+
+    .status-vol {
+      font-size: 0.75em;
+      padding: 0.15em 0.5em;
+      margin-left: 0.35em;
+      background: var(--card-bg);
+      border: 0.0625em solid;
+      border-color: var(--card-border-dark) var(--card-border-light)
+        var(--card-border-light) var(--card-border-dark);
+      color: var(--card-text);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="win95-card">
+    <div class="card-titlebar">
+      <div class="card-title-text">PomoTimer95.exe - Media Player</div>
+      <div class="card-controls">
+        <button class="card-btn card-btn-close"></button>
+      </div>
+    </div>
+
+    <div class="card-menubar">
+      <div class="menu-item active" id="tab-work" onclick="switchMode('work')">Focus (Work)</div>
+      <div class="menu-item" id="tab-short" onclick="switchMode('short')">Short Break</div>
+      <div class="menu-item" id="tab-long" onclick="switchMode('long')">Long Break</div>
+    </div>
+
+    <div class="card-body">
+      <div class="player-display">
+        <div class="track-name" id="display-mode">TRACK: WORK</div>
+        <div class="track-time" id="timer-display">25:00</div>
+      </div>
+
+      <div class="player-progress">
+        <div class="progress-fill" id="progress-fill"></div>
+        <div class="progress-thumb" id="progress-thumb"></div>
+      </div>
+
+      <div class="player-controls">
+        <button class="ctrl-btn ctrl-play" id="btn-play" title="Start/Pause"></button>
+        <button class="ctrl-btn ctrl-stop" id="btn-stop" title="Stop"></button>
+        <button class="ctrl-btn ctrl-reset" id="btn-reset" title="Reset Current Session"></button>
+      </div>
+
+      <div class="custom-panel">
+        <p style="font-size: 0.75em; font-weight: bold; margin-bottom: 0.5em; color: #000;">⚙️ CUSTOMIZE DURATIONS (MINUTES):</p>
+        <div class="custom-group">
+          <label for="input-work">Focus Time:</label>
+          <input type="number" id="input-work" class="win95-num-input" value="25" min="1" max="120">
+        </div>
+        <div class="custom-group">
+          <label for="input-short">Short Break:</label>
+          <input type="number" id="input-short" class="win95-num-input" value="5" min="1" max="60">
+        </div>
+        <div class="custom-group">
+          <label for="input-long">Long Break:</label>
+          <input type="number" id="input-long" class="win95-num-input" value="15" min="1" max="60">
+        </div>
+      </div>
+    </div>
+
+    <div class="card-statusbar">
+      <div class="status-text" id="status-text">Status: Stopped</div>
+      <div class="status-vol" id="session-count">SESSIONS: 0</div>
+    </div>
+  </div>
+
+  <script>
+    let mode = 'work';
+    let isRunning = false;
+    let timerId = null;
+    let totalSeconds = 25 * 60;
+    let remainingSeconds = 25 * 60;
+    let completedSessions = 0;
+
+    const timerDisplay = document.getElementById('timer-display');
+    const displayMode = document.getElementById('display-mode');
+    const progressFill = document.getElementById('progress-fill');
+    const progressThumb = document.getElementById('progress-thumb');
+    const statusText = document.getElementById('status-text');
+    const sessionCount = document.getElementById('session-count');
+
+    const inputWork = document.getElementById('input-work');
+    const inputShort = document.getElementById('input-short');
+    const inputLong = document.getElementById('input-long');
+
+    const btnPlay = document.getElementById('btn-play');
+    const btnStop = document.getElementById('btn-stop');
+    const btnReset = document.getElementById('btn-reset');
+
+    function getModeDuration(targetMode) {
+      if (targetMode === 'work') return Math.max(1, parseInt(inputWork.value) || 25) * 60;
+      if (targetMode === 'short') return Math.max(1, parseInt(inputShort.value) || 5) * 60;
+      if (targetMode === 'long') return Math.max(1, parseInt(inputLong.value) || 15) * 60;
+    }
+
+    function updateDisplay() {
+      const mins = Math.floor(remainingSeconds / 60).toString().padStart(2, '0');
+      const secs = (remainingSeconds % 60).toString().padStart(2, '0');
+      timerDisplay.innerText = `${mins}:${secs}`;
+
+      const percentage = totalSeconds > 0 ? ((totalSeconds - remainingSeconds) / totalSeconds) * 100 : 0;
+      progressFill.style.width = `${percentage}%`;
+      progressThumb.style.left = `${percentage}%`;
+    }
+
+    function switchMode(newMode) {
+      pauseTimer();
+      mode = newMode;
+
+      document.querySelectorAll('.menu-item').forEach(el => el.classList.remove('active'));
+      document.getElementById(`tab-${newMode}`).classList.add('active');
+
+      displayMode.innerText = `TRACK: ${newMode.toUpperCase()}`;
+      totalSeconds = getModeDuration(newMode);
+      remainingSeconds = totalSeconds;
+      statusText.innerText = `Status: Ready (${newMode.toUpperCase()})`;
+      updateDisplay();
+    }
+
+    function startTimer() {
+      if (isRunning) return;
+      isRunning = true;
+      statusText.innerText = `Status: Playing...`;
+
+      timerId = setInterval(() => {
+        if (remainingSeconds > 0) {
+          remainingSeconds--;
+          updateDisplay();
+        } else {
+          pauseTimer();
+          statusText.innerText = "Status: Session Completed!";
+          
+          if (mode === 'work') {
+            completedSessions++;
+            sessionCount.innerText = `SESSIONS: ${completedSessions}`;
+          }
+
+          try {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            const osc = ctx.createOscillator();
+            osc.connect(ctx.destination);
+            osc.frequency.value = 800;
+            osc.start();
+            setTimeout(() => osc.stop(), 500);
+          } catch(e) {}
+        }
+      }, 1000);
+    }
+
+    function pauseTimer() {
+      isRunning = false;
+      if (timerId) {
+        clearInterval(timerId);
+        timerId = null;
+      }
+      statusText.innerText = "Status: Paused";
+    }
+
+    function stopTimer() {
+      pauseTimer();
+      remainingSeconds = totalSeconds;
+      statusText.innerText = "Status: Stopped";
+      updateDisplay();
+    }
+
+    btnPlay.onclick = () => {
+      if (isRunning) {
+        pauseTimer();
+      } else {
+        startTimer();
+      }
+    };
+
+    btnStop.onclick = stopTimer;
+    btnReset.onclick = () => switchMode(mode);
+
+    [inputWork, inputShort, inputLong].forEach(input => {
+      input.addEventListener('change', () => {
+        if (!isRunning) {
+          totalSeconds = getModeDuration(mode);
+          remainingSeconds = totalSeconds;
+          updateDisplay();
+        }
+      });
+    });
+
+    updateDisplay();
+  </script>
+</body>
+</html>
