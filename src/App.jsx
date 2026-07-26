@@ -20,21 +20,21 @@ export default function App() {
   const [showReceipt, setShowReceipt] = useState(false);
   const [matchedMovie, setMatchedMovie] = useState(null);
 
-  // High-Fidelity Physics Gesture Trackers
+  // Physics Gesture Trackers
   const x = useMotionValue(0);
   const rotate = useTransform(x, [-200, 200], [-25, 25]);
   const opacity = useTransform(x, [-150, 0, 150], [0.5, 1, 0.5]);
   const controls = useAnimation();
 
-  // Automatic GitHub Pages Sub-Route Folder Locator
+  // Automatic GitHub Pages Base Path Resolver
   const baseUrl = import.meta.env.BASE_URL || "/";
 
-  // --- LOBBY LAUNCH ENGINES ---
+  // --- LOBBY LAUNCHERS ---
   const startSoloMode = async () => {
     setLoading(true);
     setPlayMode("solo");
     const fetched = await fetchTrendingMovies(1);
-    setMovies(fetched);
+    setMovies(fetched || []);
     setInSession(true);
     setLoading(false);
   };
@@ -49,6 +49,7 @@ export default function App() {
       setRole("host");
       setInSession(true);
     } catch (err) {
+      console.error(err);
       alert("Error building room ledger.");
     }
     setLoading(false);
@@ -65,7 +66,7 @@ export default function App() {
         setRole("guest");
         setInSession(true);
       } else {
-        alert("Passcode document not found!");
+        alert("Room code not found!");
       }
     } catch (err) {
       console.error(err);
@@ -73,21 +74,25 @@ export default function App() {
     setLoading(false);
   };
 
-  // --- VIEW STAGE A: MOVIE NIGHT ENTRY GATEWAY ---
+  // --- LOBBY STAGE VIEW ---
   if (!inSession) {
     return (
-      <div className="landing-stage-wrapper">
-        <div className="film-grain-overlay"></div>
+      <div 
+        className="landing-stage-wrapper"
+        style={{ backgroundImage: `url('${baseUrl}background.png')` }}
+      >
         <motion.div 
           className="landing-form-glass"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, cubicBezier: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.4 }}
         >
           <h1 className="main-logo-text">movie night</h1>
           <p className="sub-tagline">Swipe together, match immediately, and print out your cinema receipt voucher.</p>
           
-          <button onClick={startSoloMode} className="btn-solo-launcher">🍿 Solo Mode (Just Me)</button>
+          <button onClick={startSoloMode} disabled={loading} className="btn-solo-launcher">
+            🍿 Solo Mode (Just Me)
+          </button>
           
           <div className="separator-line"><span>or sync screens</span></div>
 
@@ -107,13 +112,14 @@ export default function App() {
       </div>
     );
   }
-  // --- REAL-TIME DATA STREAM PIPELINES ---
+
+  // --- FIREBASE SYNC PIPELINE ---
   useEffect(() => {
     if (!inSession || playMode === "solo") return;
 
     const loadMovies = async () => {
       const fetched = await fetchTrendingMovies(1);
-      setMovies(fetched);
+      setMovies(fetched || []);
     };
     loadMovies();
 
@@ -127,7 +133,7 @@ export default function App() {
         setHostLikes(currentHostLikes);
         setGuestLikes(currentGuestLikes);
 
-        // Scan arrays for matches
+        // Check for common movie match
         const common = currentHostLikes.filter(id => currentGuestLikes.includes(id));
         if (common.length > 0 && movies.length > 0) {
           const target = movies.find(m => m.id === common[common.length - 1]);
@@ -142,7 +148,7 @@ export default function App() {
     return () => unsubscribe();
   }, [inSession, roomCode, playMode, movies.length]);
 
-  // --- SWIPE LOGIC & PHYSICS ANIMATIONS ---
+  // --- SWIPE LOGIC ---
   const executeSwipe = async (liked) => {
     if (currentIndex >= movies.length) return;
     const movie = movies[currentIndex];
@@ -188,18 +194,16 @@ export default function App() {
       controls.start({ x: 0, transition: { type: "spring", stiffness: 300, damping: 20 } });
     }
   };
-  // --- VIEW STAGE B: REAL CUSTOM HARDWARE TICKET GENERATOR ---
+
+  // --- RECEIPT PRINT STAGE ---
   if (showReceipt && matchedMovie) {
     return (
       <div className="app-workspace-standard-bg">
-        <div className="film-grain-overlay"></div>
         <div className="printer-assembly-deck">
-          {/* Main mechanical printer slot wrapper firing your rollout extrusion */}
           <div 
             className="hardware-print-casing animated-rollout"
-            style={{ backgroundImage: `url('${baseUrl}reslu.png')` }}
+            style={{ backgroundImage: `url('${baseUrl}result.png')` }}
           >
-            {/* Overlay positioning text lines exactly within the white paper borders of your sketch */}
             <div className="receipt-text-overlay">
               <h2 className="ticket-title">MOVIENIGHT, INC.</h2>
               <p className="ticket-subtitle">MODE: {playMode.toUpperCase()}</p>
@@ -228,7 +232,6 @@ export default function App() {
                 <p className="ticket-serial">ID: #{matchedMovie.id}</p>
               </div>
 
-              {/* Advanced Animated Ink Stamp Layer */}
               <motion.div 
                 className="receipt-ink-stamp"
                 initial={{ scale: 2.5, opacity: 0, rotate: -25 }}
@@ -249,11 +252,10 @@ export default function App() {
     );
   }
 
-  // --- VIEW STAGE C: CARD DECK INTERFACE FRAME ---
+  // --- CARD SWIPER STAGE ---
   const activeMovie = movies[currentIndex];
   return (
     <div className="app-workspace-standard-bg">
-      <div className="film-grain-overlay"></div>
       <header className="workspace-navbar">
         <span>Mode: <strong>{playMode === "solo" ? "Solo Play" : `Room: ${roomCode}`}</strong></span>
         {playMode === "couple" && (
@@ -281,7 +283,7 @@ export default function App() {
               </div>
               <div className="card-body-metadata">
                 <h2>{activeMovie.title}</h2>
-                <p>{activeMovie.overview || "No plot logs provided for this movie entry."}</p>
+                <p>{activeMovie.overview || "No plot overview available for this title."}</p>
               </div>
               <div className="card-button-footer-row">
                 <button onClick={() => triggerButtonSwipe(false)} className="btn-footer-skip">❌ Skip</button>
