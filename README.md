@@ -1,4 +1,4 @@
-# ⏱️ PomoTimer95
+# ⏱️ Windows 95 - Study Timer
 
 A media-player-inspired Pomodoro focus timer wrapped in a classic **Windows 95 interface**. Designed to bring vintage desktop vibes to your focus and productivity sessions—built using clean, single-file vanilla web standards.
 
