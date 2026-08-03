@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PomoTimer95 ⏱️</title>
+  <title>StudyTimer</title>
 
   <style>
     /* Windows 95 Theme Tokens */ 
@@ -27,7 +27,7 @@
 
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #008080; /* Win95 Desktop Teal */
+      background-color: #008080; 
       min-height: 100vh;
       display: flex;
       justify-content: center;
@@ -35,7 +35,6 @@
       padding: 1.5rem;
     }
 
-    /* EXPANDED WIN95 CARD */
     .win95-card {
       font-size: 1.15rem;
       width: 100%;
@@ -125,7 +124,6 @@
       padding: 1em;
     }
 
-    /* DIGITAL LED DISPLAY */
     .player-display {
       display: flex;
       justify-content: space-between;
@@ -154,7 +152,6 @@
       letter-spacing: 2px;
     }
 
-    /* PROGRESS BAR */
     .player-progress {
       position: relative;
       height: 1.1em;
@@ -187,7 +184,6 @@
       transition: left 0.3s ease;
     }
 
-    /* CONTROLS */
     .player-controls {
       display: flex;
       justify-content: center;
@@ -246,7 +242,6 @@
       transform: translate(-50%, -50%);
     }
 
-    /* CUSTOMIZATION PANEL */
     .custom-panel {
       background: #ffffff;
       border: 0.0625em solid var(--card-border-dark);
@@ -278,7 +273,6 @@
       outline: none;
     }
 
-    /* STATUSBAR */
     .card-statusbar {
       display: flex;
       align-items: center;
@@ -315,7 +309,7 @@
 
   <div class="win95-card">
     <div class="card-titlebar">
-      <div class="card-title-text">PomoTimer95.exe - Media Player</div>
+      <div class="card-title-text">StudyTimer.exe</div>
       <div class="card-controls">
         <button class="card-btn card-btn-close"></button>
       </div>
@@ -345,7 +339,7 @@
       </div>
 
       <div class="custom-panel">
-        <p style="font-size: 0.75em; font-weight: bold; margin-bottom: 0.5em; color: #000;">⚙️ CUSTOMIZE DURATIONS (MINUTES):</p>
+        <p style="font-size: 0.75em; font-weight: bold; margin-bottom: 0.5em; color: #000;"> CUSTOMIZE DURATIONS (MINUTES):</p>
         <div class="custom-group">
           <label for="input-work">Focus Time:</label>
           <input type="number" id="input-work" class="win95-num-input" value="25" min="1" max="120">
